@@ -41,6 +41,7 @@
     "vue-sonner": "^2.0.1"
   },
   "devDependencies": {
+    "@iconify-json/flowbite": "^1.2.5",
     "@iconify-json/lucide": "^1.2.53"
   }
 }
