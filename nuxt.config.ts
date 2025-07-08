@@ -13,7 +13,13 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+
     public: {
+      homepageUrl: process.env.NUXT_PUBLIC_HOMEPAGE_URL,
+      authCallbackGitHub: process.env.NUXT_PUBLIC_AUTH_CALLBACK_URL_GITHUB,
+      githubClientId: process.env.GITHUB_CLIENT_ID,
+      convexUrl: process.env.CONVEX_URL,
       messagesPerPage: process.env.NUXT_PUBLIC_MESSAGE_PER_PAGE,
       timeThreshold: process.env.NUXT_PUBLIC_TIME_THRESHOLD,
     },

@@ -6,20 +6,16 @@ import {
 } from "~/lib/auth/credential";
 
 export default defineEventHandler(async (event) => {
-  const manualSessionToken = getCookie(event, sessionCookieName);
+  const sessionToken = getCookie(event, sessionCookieName);
 
-  if (!manualSessionToken) {
+  if (!sessionToken) {
     event.context.user = null;
     event.context.session = null;
   } else {
-    const { session, user } = await validateSessionToken(manualSessionToken);
+    const { session, user } = await validateSessionToken(sessionToken);
 
     if (session) {
-      setSessionTokenCookie(
-        event,
-        manualSessionToken,
-        new Date(session.expired_at)
-      );
+      setSessionTokenCookie(event, sessionToken, new Date(session.expired_at));
     } else {
       deleteSessionTokenCookie(event);
     }

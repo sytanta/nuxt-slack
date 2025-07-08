@@ -8,8 +8,13 @@ const { user, isLoading } = storeToRefs(authStore)
 
 const signOut = () => {
     $fetch('/api/auth/signout', { method: 'POST' })
-        .then(workspacesStore.clear) // clear user's workspace data
-        .then(() => { navigateTo('/auth') })
+        .then(() => {
+            authStore.clear() // clear user data
+            workspacesStore.clear() // clear workspace data
+        })
+        .then(() => {
+            navigateTo('/auth')
+        })
 }
 </script>
 

@@ -19,7 +19,11 @@ const useAuthStore = defineStore("auth", () => {
     user.value = newUser;
   }
 
-  return { init, user, setUser, isLoading };
+  function clear() {
+    user.value = null;
+  }
+
+  return { init, user, setUser, isLoading, clear };
 });
 
 export default useAuthStore;

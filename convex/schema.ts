@@ -30,26 +30,30 @@ export default defineSchema({
     .index("by_session_token", ["session_token"]),
   accounts: defineTable({
     user_id: v.id("users"),
-    provider: v.string(), // 'google', 'github', 'credentials'
+    provider: v.string(), // 'google', 'github', 'email'
     provider_account_id: v.string(),
-    type: v.string(), // 'oauth', 'credentials'
+    type: v.string(), // 'oauth', 'email'
     scope: v.string(),
-    id_token: v.string(),
     access_token: v.string(),
-    refresh_token: v.string(),
-    access_token_expired_at: v.number(),
-    refresh_token_expired_at: v.number(),
+    id_token: v.optional(v.string()),
+    refresh_token: v.optional(v.string()),
+    access_token_expired_at: v.optional(v.number()),
+    refresh_token_expired_at: v.optional(v.number()),
     updated_at: v.number(),
   })
     .index("by_user_id", ["user_id"])
-    .index("by_provider_account_id", ["provider", "provider_account_id"])
+    .index("by_provider", ["provider"])
+    .index("by_provider_provider_account_id", [
+      "provider",
+      "provider_account_id",
+    ])
     .index("by_access_token", ["access_token"])
     .index("by_refresh_token", ["refresh_token"])
     .index("by_id_token", ["id_token"]),
   verification: defineTable({
-    identifier: v.string(), // email, user_id
+    identifier: v.string(), // email, email, or user_id
     token: v.string(),
-    type: v.string(), // 'email_verification', 'password_reset'
+    type: v.string(), // 'email_verification', 'password_reset', 'otp'
     expired_at: v.number(),
   }).index("by_identifier_token", ["identifier", "token"]),
   rate_limits: defineTable({

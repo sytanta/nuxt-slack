@@ -8,6 +8,8 @@ export const create = mutation({
     session_token: v.string(),
     expired_at: v.number(),
     updated_at: v.number(),
+    ip_address: v.optional(v.string()),
+    user_agent: v.optional(v.string()),
   },
   async handler(ctx, args) {
     return await ctx.db.insert("sessions", args);

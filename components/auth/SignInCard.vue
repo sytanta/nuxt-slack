@@ -7,7 +7,7 @@ const workspacesStore = useWorkspacesStore()
 const error = ref('')
 const processing = ref(false)
 
-const handleSubmit = (e: Event) => {
+const handleSignIn = (e: Event) => {
     processing.value = true
 
     const formElm = e.currentTarget as HTMLFormElement
@@ -24,6 +24,10 @@ const handleSubmit = (e: Event) => {
         error.value = e.message || 'Invalid email or password'
     }).finally(() => processing.value = false)
 }
+
+const signInWithGitHub = () => {
+    window.location.href = '/api/auth/github'
+}
 </script>
 
 <template>
@@ -37,7 +41,7 @@ const handleSubmit = (e: Event) => {
             <p>{{ error }}</p>
         </div>
         <CardContent class="space-y-5 px-0 pb-0">
-            <form @submit.prevent="handleSubmit">
+            <form @submit.prevent="handleSignIn">
                 <fieldset disable="processing" class="space-y-2.5">
                     <Input type="email" name="email" placeholder="Email" required />
                     <Input type="password" name="password" min="6" max="255" placeholder="Password" required />
@@ -51,12 +55,12 @@ const handleSubmit = (e: Event) => {
             </form>
             <Separator />
             <div class="flex flex-col gap-y-2.5">
-                <Button variant="outline" size="lg" class="w-full relative">
+                <!-- <Button variant="outline" size="lg" class="w-full relative">
                     <Icon name="logos:google-icon" size="20px"
                         class="absolute size-5 left-2.5 top-1/2 -translate-y-1/2" />
                     Continue with Google
-                </Button>
-                <Button variant="outline" size="lg" class="w-full relative">
+                </Button> -->
+                <Button variant="outline" size="lg" @click="signInWithGitHub" class="w-full relative">
                     <Icon name="logos:github-icon" size="20px"
                         class="absolute size-5 left-2.5 top-1/2 -translate-y-1/2" />
                     Continue with Github

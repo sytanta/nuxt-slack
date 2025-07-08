@@ -17,7 +17,12 @@ export function generateSessionToken() {
   return token;
 }
 
-export async function createSession(token: string, userId: string) {
+export async function createSession(
+  token: string,
+  userId: string,
+  ip_address?: string,
+  user_agent?: string
+) {
   const session_token = encodeHexLowerCase(
     sha256(new TextEncoder().encode(token))
   );
@@ -27,6 +32,8 @@ export async function createSession(token: string, userId: string) {
   const session = {
     user_id: userId as Id<"users">,
     session_token,
+    ip_address,
+    user_agent,
     expired_at: new Date(Date.now() + SESSION_LIFESPAN).getTime(),
     updated_at: created_at,
   };
@@ -90,7 +97,7 @@ export function setSessionTokenCookie(
   setCookie(event, sessionCookieName, token, {
     expires: expiresAt,
     httpOnly: true,
-    secure: false,
+    secure: !import.meta.dev,
     sameSite: "strict",
     path: "/",
   });
@@ -101,8 +108,14 @@ export function deleteSessionTokenCookie(event: H3Event<EventHandlerRequest>) {
 }
 
 // Filter user's properties to be returned to client-side
-export function serializeUser(user: DataModel["users"]["document"]) {
+export function serializeUser(user: DataModel["users"]["document"] | null) {
   if (!user) return null;
   const { _id, email, name, avatar, phone_number } = user;
-  return { id: String(_id), email, name, avatar, phone_number };
+  return {
+    id: String(_id),
+    email,
+    name,
+    avatar,
+    phone_number,
+  };
 }

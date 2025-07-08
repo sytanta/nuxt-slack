@@ -28,6 +28,10 @@ const handleSubmit = (e: Event) => {
         error.value = e.message || 'Invalid email or password'
     }).finally(() => processing.value = false)
 }
+
+const signUpWithGitHub = () => {
+    window.location.href = '/api/auth/github'
+}
 </script>
 
 <template>
@@ -58,12 +62,12 @@ const handleSubmit = (e: Event) => {
             </form>
             <Separator />
             <div class="flex flex-col gap-y-2.5">
-                <Button variant="outline" size="lg" class="w-full relative">
+                <!-- <Button variant="outline" size="lg" class="w-full relative">
                     <Icon name="logos:google-icon" size="20px"
                         class="absolute size-5 left-2.5 top-1/2 -translate-y-1/2" />
                     Continue with Google
-                </Button>
-                <Button variant="outline" size="lg" class="w-full relative">
+                </Button> -->
+                <Button variant="outline" size="lg" @click="signUpWithGitHub" class="w-full relative">
                     <Icon name="logos:github-icon" size="20px"
                         class="absolute size-5 left-2.5 top-1/2 -translate-y-1/2" />
                     Continue with Github
