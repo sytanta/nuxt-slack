@@ -1,23 +1,31 @@
 <script setup lang="ts">
 import useAuthStore from '~/stores/auth'
+import useWorkspacesStore from '~/stores/workspaces';
 import { injectWorkspaceData } from '~/composables/workspace/useWorkspaceData';
 
 const authStore = useAuthStore()
+const workspacesStore = useWorkspacesStore()
 const workspaceData = injectWorkspaceData()
-
-const preferencesModalOpen = ref(false)
-const inviteModalOpen = ref(false)
 
 const isAdmin = computed(() => {
     const memberShip = workspaceData.members.value.members?.find(({ _id }) => _id === authStore.user?.id)
     return memberShip?.is_admin
 })
 
+// Invite & preferences modals control
+const preferencesModalOpen = ref(false)
+const inviteModalOpen = ref(false)
+
 const openPreferencesModal = () => preferencesModalOpen.value = true
 const closePreferencesModal = () => preferencesModalOpen.value = false
 
 const openInviteModal = () => inviteModalOpen.value = true
 const closeInviteModal = () => inviteModalOpen.value = false
+
+const updateWorkspaceName = (newName: string) => {
+    workspaceData.updateCurrentWorkspaceName(newName)
+    workspacesStore.updateWorkspaceName(workspaceData.workspace.value.workspace._id, newName)
+}
 </script>
 
 <template>
@@ -75,6 +83,5 @@ const closeInviteModal = () => inviteModalOpen.value = false
         :join-code="workspaceData.workspace.value.workspace.join_code" />
 
     <WorkspacePreferencesModal :open="preferencesModalOpen" :close-modal="closePreferencesModal"
-        @on-rename="workspaceData.updateCurrentWorkspaceName"
-        :initial-value="workspaceData.workspace.value?.workspace?.name" />
+        :initial-value="workspaceData.workspace.value?.workspace?.name" @on-rename="updateWorkspaceName" />
 </template>

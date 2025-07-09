@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import type { Doc } from "~/convex/_generated/dataModel";
+import type { Doc, Id } from "~/convex/_generated/dataModel";
 
 /**
  * useWorkspacesStore - manages user's all workspaces
@@ -35,6 +35,14 @@ const useWorkspacesStore = defineStore("workspaces", () => {
   }
 
   const status = computed(() => _fetchComposable?.status);
+
+  const updateWorkspaceName = (id: Id<"workspaces">, newName: string) => {
+    const workspace = workspaces.value.find(({ _id }) => _id === id);
+    if (!workspace) return;
+
+    workspace.name = newName;
+  };
+
   const refresh = () => _fetchComposable?.refresh();
   const clear = () => _fetchComposable?.clear();
 
@@ -47,6 +55,7 @@ const useWorkspacesStore = defineStore("workspaces", () => {
     createWSModalOpen,
     openCreateWorkspaceModal,
     closeCreateWorkspaceModal,
+    updateWorkspaceName,
   };
 });
 
