@@ -20,8 +20,8 @@ const handleSignIn = (e: Event) => {
         authStore.setUser(res?.user || null)
         await workspacesStore.refresh()
         navigateTo('/')
-    }).catch((e) => {
-        error.value = e.message || 'Invalid email or password'
+    }).catch(() => {
+        error.value = 'Invalid credentials'
     }).finally(() => processing.value = false)
 }
 

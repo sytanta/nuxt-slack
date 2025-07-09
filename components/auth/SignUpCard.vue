@@ -24,8 +24,8 @@ const handleSubmit = (e: Event) => {
         authStore.setUser(res?.user || null)
         await workspacesStore.refresh()
         navigateTo('/')
-    }).catch((e) => {
-        error.value = e.message || 'Invalid email or password'
+    }).catch(() => {
+        error.value = 'Invalid email or password'
     }).finally(() => processing.value = false)
 }
 
