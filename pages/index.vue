@@ -16,4 +16,8 @@ watchEffect(() => {
 })
 </script>
 
-<template></template>
+<template>
+    <div class="h-full flex flex-col flex-1 items-center justify-center">
+        <Icon name="svg-spinners:8-dots-rotate" size="24px" class="size-6 text-muted-foreground" />
+    </div>
+</template>
