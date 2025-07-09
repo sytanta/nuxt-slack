@@ -6,6 +6,7 @@ definePageMeta({
     layout: 'workspace'
 })
 
+const route = useRoute();
 const auth = useAuthStore()
 const workspaceData = injectWorkspaceData()
 
@@ -24,7 +25,7 @@ const isError = computed(() => workspaceData.workspaceLoadStatus.value === 'erro
 
 const checkWorkspaceChannels = () => {
     if (workspaceData.channels.value?.channels?.length) {
-        // Navigate to workspace first channel's page
+        // Navigate to workspace first channel
         navigateTo(`/workspace/${workspaceData.workspace.value.workspace._id}/channel/${workspaceData.channels.value.channels[0]._id}`)
     } else if (!workspaceData.createCNModalOpen.value) {
         const isAdmin = auth.user?.id && auth.user.id === workspaceData.workspace.value?.workspace?.user_id
@@ -34,40 +35,42 @@ const checkWorkspaceChannels = () => {
     }
 }
 
-onMounted(() => {
-    // Run this check when user accesses directly from browser url bar
-    if (!window.history.state.back) checkWorkspaceChannels()
-})
-
+// Listen to workspace & loading status changes
 watch([
-    workspaceData.workspace,
-    workspaceData.channels,
-    workspaceData.workspaceLoadStatus,
-    workspaceData.channelsLoadStatus,
-    workspaceData.membersLoadStatus,
+    () => route.params['workspaceId'],
+    () => workspaceData.workspaceLoadStatus.value,
+    () => workspaceData.channelsLoadStatus.value,
+    () => workspaceData.membersLoadStatus.value,
     workspaceData.createCNModalOpen,
-], () => {
-    if (workspaceData.workspaceLoadStatus.value !== 'success'
-        || workspaceData.channelsLoadStatus.value !== 'success'
-        || workspaceData.membersLoadStatus.value !== 'success') return
+], ([workspaceId, workspaceLoadStatus, channelsLoadStatus, membersLoadStatus]) => {
+    if (
+        // The first line is to fix the issue of all loading statuses are "success"
+        // when navigating to a new workspace.
+        // Those "success" are of the old workspace.
+        // This check won't work when using the second parameter of the callback function
+        workspaceData.workspace.value?.workspace?._id && workspaceData.workspace.value?.workspace?._id !== workspaceId
+        || workspaceLoadStatus !== 'success'
+        || channelsLoadStatus !== 'success'
+        || membersLoadStatus !== 'success'
+    ) return
 
-    // This will run when user navigates from other pages
     checkWorkspaceChannels()
-})
+}, { immediate: true })
 </script>
 
 <template>
     <div class="h-full flex flex-col flex-1 items-center justify-center gap-1">
         <template v-if="isLoading">
-            <Icon name="svg-spinners:8-dots-rotate" size="20px" class="size-5 text-muted-foreground" />
+            <Icon name="svg-spinners:8-dots-rotate" size="24px" class="size-6 text-muted-foreground" />
         </template>
         <template v-else-if="isError || !workspaceData.members.value?.members?.length">
-            <Icon name="lucide:triangle-alert" size="20px" class="size-5 text-muted-foreground" />
+            <Icon name="lucide:triangle-alert" size="24px" class="size-6 text-muted-foreground" />
             <span class="text-sm text-muted-foreground">Workspace not found</span>
         </template>
         <template v-else-if="!workspaceData.channels.value?.channels?.length">
-            <Icon name="lucide:triangle-alert" size="20px" class="size-5 text-muted-foreground" />
+            <Icon name="lucide:triangle-alert" size="24px" class="size-6 text-muted-foreground" />
             <span class="text-sm text-muted-foreground">No channel found</span>
         </template>
+        <Icon v-else name="svg-spinners:8-dots-rotate" size="24px" class="size-6 text-muted-foreground" />
     </div>
 </template>
