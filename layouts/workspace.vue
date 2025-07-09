@@ -37,18 +37,15 @@ const isLoading = computed(() => {
     const currentRouteName = route.name
 
     if (currentRouteName === 'workspace-workspaceId')
-        return false // workspaceData.data.workspace.value == null
-    // && workspaceData.data.workspaceLoadStatus.value !== 'pending'
+        return false
 
     if (currentRouteName === 'workspace-workspaceId-channel-channelId') {
         return workspaceData.data.workspace.value == null
-            // && workspaceData.data.workspaceLoadStatus.value !== 'pending'
             && channelData.data.data.value == null
     }
 
     if (currentRouteName === 'workspace-workspaceId-member-memberId') {
         return workspaceData.data.workspace.value == null
-            // && workspaceData.data.workspaceLoadStatus.value !== 'pending'
             && conversationData.data.data.value == null
     }
 
