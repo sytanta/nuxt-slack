@@ -15,7 +15,7 @@ const auth = useAuthStore()
 const { openModal } = useConfirmModal()
 const { members, refreshChannels, updateChannelName } = injectWorkspaceData()
 
-const isAdmin = !!members.value.members.find(({ _id, is_admin }) => is_admin && _id === auth.user?.id)
+const isAdmin = !!members.value?.members.find(({ _id, is_admin }) => is_admin && _id === auth.user?.id)
 
 // Main modal states
 const displayedTitle = ref(title)
