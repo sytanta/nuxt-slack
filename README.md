@@ -126,7 +126,13 @@ Before running this project, make sure you have:
    - Please follow this page to deploy Convex to your selected hosting provider [Convex deployment](https://docs.convex.dev/production/hosting/)
 
 4. **Update Convex environment variables**
+
+   - Add `CONVEX_DEPLOY_KEY` from step 3
    - Update `CONVEX_DEPLOYMENT` and `NEXT_PUBLIC_CONVEX_URL` in Vercel
+   - Add the remaining variables
+
+5. **Set build command**
+   - It should be `npx convex deploy --cmd 'npm run build'`
 
 ````
 
