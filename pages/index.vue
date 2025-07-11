@@ -6,6 +6,11 @@ const workspacesStore = useWorkspacesStore()
 setPageSEO(() => 'Nuxt Slack')
 
 watchEffect(() => {
+    if (
+        workspacesStore.status?.value === 'idle'
+        || workspacesStore.status?.value === 'pending'
+    ) return
+
     if (!workspacesStore.workspaces.length && !workspacesStore.createWSModalOpen) {
         // If user has no workspace, display a modal for creating anew
         // user cannot close this modal here
