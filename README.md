@@ -134,7 +134,7 @@ Before running this project, make sure you have:
 5. **Set build command**
    - It should be `npx convex deploy --cmd 'npm run build'`
 
-````
+```
 
 ## 🔒 Authentication
 
@@ -144,16 +144,7 @@ The app supports two authentication methods:
 2. **GitHub OAuth**: Social login with GitHub
 
 User sessions are managed securely with encrypted session tokens.
-
-## 🧪 Testing
-
-Run tests with:
-
-```bash
-npm run test
-# or
-yarn test
-````
+```
 
 ## 📜 License
 
@@ -164,6 +155,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 This project is based on this comprehensive tutorial:
 
 - [YouTube Tutorial](https://www.youtube.com/watch?v=lXITA5MZIiI) - Complete walkthrough of building this Slack clone
+
+## 🐛 Issues
+
+- Mobile responsiveness needs more work
+- Hydration mismatch warnings from Reka UI
+- Error messages from API and Convex are not displayed properly
 
 ## 🔮 Future Enhancements
 
