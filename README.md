@@ -132,10 +132,13 @@ Before running this project, make sure you have:
    - Add the remaining variables
 
 5. **Set build command**
+
    - It should be `npx convex deploy --cmd 'npm run build'`
 
-```
+6. **Update GitHub OAuth setting**
+   - `Homepage URL` and `Authorization callback URL` should be pointed to your newly deployed website domain
 
+```
 ## 🔒 Authentication
 
 The app supports two authentication methods:
@@ -143,7 +146,7 @@ The app supports two authentication methods:
 1. **Email/Password**: Traditional session-based authentication
 2. **GitHub OAuth**: Social login with GitHub
 
-User sessions are managed securely with encrypted session tokens.
+User sessions are managed securely with encrypted session tokens. You can add more OAuth providers as needed.
 ```
 
 ## 📜 License
