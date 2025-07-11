@@ -3,7 +3,8 @@ import useWorkspacesStore from '~/stores/workspaces';
 
 const workspacesStore = useWorkspacesStore()
 
-await workspacesStore.init()
+// Load user's workspaces data
+await callOnce('workspaces-init', async () => workspacesStore.init(), { mode: 'navigation' });
 
 const onCreateWorkspace = async () => {
     await workspacesStore.refresh()
