@@ -3,7 +3,7 @@ import 'vue-sonner/style.css';
 
 import useAuthStore from '~/stores/auth';
 
-callOnce('auth-init', () => useAuthStore().init());
+callOnce('auth-init', () => useAuthStore().init(), { mode: 'navigation' });
 </script>
 
 <template>
