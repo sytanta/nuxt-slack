@@ -11,8 +11,6 @@ const signOut = () => {
         .then(() => {
             authStore.clear() // clear user data
             workspacesStore.clear() // clear workspace data
-        })
-        .then(() => {
             navigateTo('/auth')
         })
 }
