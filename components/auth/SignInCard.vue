@@ -4,8 +4,8 @@ import useWorkspacesStore from '~/stores/workspaces'
 
 const authStore = useAuthStore()
 const workspacesStore = useWorkspacesStore()
-const error = ref('')
 const processing = ref(false)
+const error = ref('')
 
 const handleSignIn = (e: Event) => {
     processing.value = true

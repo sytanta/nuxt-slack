@@ -6,8 +6,8 @@ const route = useRoute()
 const { setUser } = useAuthStore()
 const { refresh: refreshWorkspaces } = useWorkspacesStore()
 
-const error = ref('')
 const processing = ref(true)
+const error = ref('')
 
 onMounted(() => {
     $fetch('/api/auth/github/callback', { method: 'POST', body: { code: route.query.code } })
