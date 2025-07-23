@@ -1,10 +1,4 @@
-<script setup lang="ts">
-import 'vue-sonner/style.css';
-
-import useAuthStore from '~/stores/auth';
-
-callOnce('auth-init', () => useAuthStore().init(), { mode: 'navigation' });
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <NuxtLayout name="workspaces">
