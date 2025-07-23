@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import useWorkspacesStore from '~/stores/workspaces';
+import useWorkspacesStore from '~/stores/workspaces'
 
 const workspacesStore = useWorkspacesStore()
 
 // Load user's workspaces data
-await callOnce('workspaces-init', async () => workspacesStore.init(), { mode: 'navigation' });
+await workspacesStore.init()
 
 const onCreateWorkspace = async () => {
     await workspacesStore.refresh()
